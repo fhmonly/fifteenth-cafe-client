@@ -1,0 +1,21 @@
+:root {
+    /* --max-screen-width: 100%; */
+    --max-screen-width: 375px;
+    --page-visibility: block;
+    --rotate-page-visibility: none;
+
+    --bg-body: white;
+    --bg-main: #a91d3a;
+    
+    --text-main: black;
+    --grey-color: #eeeeee;
+
+    --font-family: "Poppins", sans-serif;
+
+    --font-size-sm: 5px;
+    --font-size-md: 9px;
+    --font-size-lg: 12px;
+    --font-size-xl: 16px;
+
+    --text-line-height: 20px;
+}

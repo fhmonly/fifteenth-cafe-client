@@ -1,0 +1,8 @@
+@import "./root.css";
+body>#root {
+    background-color: var(--grey-color);
+}
+
+.discount-container{
+    border-color: var(--bg-main);
+}

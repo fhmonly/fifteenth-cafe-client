@@ -1,0 +1,39 @@
+.order-card .order-header {
+    background-color: black;
+    border-radius: 2px 2px 0px 0px;
+}
+.order-card .order-body {
+    border-radius: 0 0 2px 2px;
+    border-color: #a91d3a;
+    border-width: 1px;
+    border-top: none;
+    color: black;
+}
+.order-card {
+    font-size: 9px;
+}
+.order-body table tr td:nth-child(even) {
+    text-align: end;
+    font-weight: 700;
+}
+.order-body table tr td span {
+    display: inline-block;
+    padding: 0.5rem 0;
+}
+.order-body > [class*="order-"] {
+    padding: 0.5rem 1rem;
+}
+.order-body .order-total-price {
+    border-top: 1px solid #a91d3a;
+}
+.order-body a {
+    border: 1px solid #a91d3a;
+    color: #a91d3a;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    width: 100%;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    text-align: center;
+}

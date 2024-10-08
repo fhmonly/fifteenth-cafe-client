@@ -1,0 +1,55 @@
+@import "./root.css";
+
+.search-header > div {
+    flex-grow: 1;
+}
+
+.menu-header .category-name {
+    width: 100px;
+    height: 29px;
+    border-radius: 5px;
+    background-color: #eeeeee;
+    color: var(--bg-main);
+}
+
+.menu-header span {
+    font-size: 9px;
+}
+
+.menu-header .see-all {
+    font-size: 9px;
+    line-height: 20px;
+}
+
+.search-header2 .history {
+    border-color: var(--bg-main);
+    color: var(--bg-main);
+}
+
+.search-header2>a{
+    border: 1px solid currentColor;
+    border-radius: 6px;
+}
+
+.menu-content .card-title {
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 20px;
+    color: var(--bg-main);
+}
+
+.menu-content .menu-price {
+    font-size: 7px;
+    font-weight: 400;
+    line-height: 20px;
+}
+
+.menu-content .menu-rating {
+    font-size: 7px;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.menu-content .menu-rating svg {
+    width: 7px;
+}

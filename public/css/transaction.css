@@ -1,0 +1,39 @@
+.content-wrapper {
+    --done-visibility: none;
+    --process-visibility: none;
+}
+
+.tab-wrapper[active-tab="done-tab"]
+    + .content-wrapper
+    [content-name="done-content"] {
+    --done-visibility: block;
+    --process-visibility: none;
+}
+
+.tab-wrapper[active-tab="process-tab"]
+    + .content-wrapper
+    [content-name="process-content"] {
+    --done-visibility: none;
+    --process-visibility: block;
+}
+.tab-wrapper[active-tab="process-tab"] [tab-name="process-tab"] span,
+.tab-wrapper[active-tab="done-tab"] [tab-name="done-tab"] span {
+    width: 100%;
+    display: inline-block;
+    border-bottom: 1.4px solid black;
+    padding-bottom: 0.35rem;
+}
+
+.content-wrapper > [content-name="done-content"] {
+    display: var(--done-visibility);
+}
+
+.content-wrapper > [content-name="process-content"] {
+    display: var(--process-visibility);
+}
+
+body,
+html,
+#root {
+    background-color: white;
+}

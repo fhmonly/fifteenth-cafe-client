@@ -1,0 +1,103 @@
+@import "/css/root.css";
+
+@font-face {
+    font-family: "Poppins";
+    src: url("../font/poppins/Poppins-Regular.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+*{
+    caret-color: currentColor;
+}
+
+body,#root{
+    max-width: var(--max-screen-width);
+}
+
+body {
+    margin: 0 auto !important;
+    font-family: var(--font-family);
+    font-size: var(--font-size-md);
+    padding-right: 0px !important;
+}
+
+body>#root {
+    display: var(--page-visibility);
+    background-color: var(--bg-body);
+    color: var(--text-main);
+}
+
+body #pls-rotate {
+    display: var(--rotate-page-visibility);
+}
+
+.box-shadow {
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+
+@media (orientation: landscape) {
+    /* body, */
+    body[device-type="mobile"] {
+        --page-visibility: none;
+        --rotate-page-visibility: block;
+        /* --max-screen-width: 100%; */
+    }
+
+    body[device-type="desktop"] {
+        --page-visibility: block;
+        --rotate-page-visibility: none;
+        --max-screen-width: 360px;
+    }
+}
+
+header {
+    height: 56px;
+    border-radius: 0px 0px 10px 10px;
+}
+
+.fifteenth-logo {
+    font-size: 24px;
+    font-weight: 900;
+}
+
+.fifteenth-logo + * {
+    font-size: 8px;
+    font-weight: 800;
+    height: 100%;
+    position: static;
+}
+
+.bg-main {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+}
+
+.text-bg-main {
+    color: var(--bg-main);
+}
+
+div:where(.swal2-container) div:where(.swal2-popup),
+div:where(.swal2-container) .swal2-html-container {
+    /* padding: 0 !important; */
+}
+
+.swal2-html-container input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.swal2-html-container input[type="number"] {
+    appearance: none;
+    outline: none;
+    border: none;
+    text-align: center;
+}
+
+input[type="number"].no-btn::-webkit-inner-spin-button,
+input[type="number"].no-btn::-webkit-outer-spin-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    margin: 0 !important;
+}
