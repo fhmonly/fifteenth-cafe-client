@@ -37,7 +37,7 @@ class CheckoutItem extends HTMLElement {
     <div
         class="bg-white rounded-lg p-10 flex flex-col justify-center items-center"
     >
-        <dotlottie-player
+        <dotlottie-wc
             src="/assets/json/animation-delete.json"
             background="transparent"
             speed="1"
@@ -45,7 +45,7 @@ class CheckoutItem extends HTMLElement {
             autoplay
             style="height: 140px;"
         >
-        </dotlottie-player>
+        </dotlottie-wc>
         <div class="text-black font-bold text-xl mt-2">Delete this Item</div>
         <div class="text-black font-base text-xs mt-1">
             Are you sure to delete this item ?

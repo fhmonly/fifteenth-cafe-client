@@ -11,7 +11,8 @@
         <div class="order-body">
             <div class="order-details">
                 <table class="w-full">
-                    <tr>
+                    <tbody>
+                        <tr>
                         <td><span>Table</span></td>
                         <td class="table-number">12</td>
                     </tr>
@@ -31,14 +32,17 @@
                             </div>
                         </td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="order-total-price">
                 <table class="w-full">
-                    <tr>
+                    <tbody>
+                        <tr>
                         <td><span>Grand Total</span></td>
                         <td>Rp. 100.000</td>
                     </tr>
+                    </tbody>
                 </table>
             </div>
             <div class="flex justify-center">

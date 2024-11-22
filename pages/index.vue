@@ -1,71 +1,42 @@
 <script setup>
+import ModalCategory from "@/components/modal/category.vue";
+import { createApp } from 'vue';
 import Swal from "sweetalert2";
 
-useSeoMeta({
-    title: "Fifteenth Cafe by Mark Design",
-    titleTemplate: ""
+const menuMode = useMenuMode()
+const { data: menus, status: menusLoadingStatus, error, refresh } = useAuthFetch('/api/menu', {
+    pick: ['data'],
+    key: 'api-menus',
 });
-
-useHead({
-    script: [
-        {
-            src: "/js/modal/modal-category.js",
-        },
-        {
-            src: "/js/modal/modal-add-cart.js"
-        },
-    ],
-})
-
-const config = useRuntimeConfig()
-const menuMode = useMenuMode();
-const tableId = "01";
-const outletId = 2;
-const currentMenuUrl = computed(() => {
-    let url = "api/"
-    switch (menuMode.value) {
-        case "test":
-            url = "menu"
-            break;
-        default:
-            url = `menu/${btoa(outletId)}/${btoa(tableId)}`
-            break;
-    }
-    return `${config.public.apiURL}/${url}`
-})
-const menuCategoryUrl = `${config.public.apiURL}/category`
-const { data: menus } = await useFetch(currentMenuUrl, {
-    pick: [],
-    headers: {
-        "ngrok-skip-browser-warning": true,
-    },
-    onResponse: ({ response }) => {
-        console.log(response)
-    }
-});
-const { data: menuCategory } = await useFetch(menuCategoryUrl, { pick: [] });
 
 function showCategoryModal() {
     Swal.fire({
         showConfirmButton: false,
         didRender: () => {
-            const modal = document.createElement("modal-category")
-            modal.categories = categories
-            Swal.getHtmlContainer().appendChild(modal)
-        }
-    })
+            const modal = document.createElement('div');
+            createApp(ModalCategory).mount(modal);
+            Swal.getHtmlContainer().appendChild(modal);
+        },
+    });
 }
 </script>
 
 <template>
-    <AppHeader />
     <div class="main-content bg-[#eeeeee] flex-1 flex flex-col">
+        <AppHeader />
         <Jumbotron />
-        <div class="relative flex-1 pt-3 bg-white">
+        <div class="relative flex flex-col flex-1 pt-3 bg-white">
             <div class="text-white search-item-wrapper sticky top-0 z-[1] bg-white shadow-sm px-5 py-2">
                 <div class="flex flex-col gap-y-3">
                     <div class="flex font-bold search-header gap-x-2">
-                        <SearchHeaderAllItem @click="menuMode = 'show-all'" class="cursor-pointer" />
+                        <div class="all-item bg-main rounded-[5px] cursor-pointer flex p-1"
+                            @click="menuMode = 'show-all'">
+                            <span class="inline-block text-center grow text-white pt-[1.5px]">
+                                All Item
+                            </span>
+                            <span class="bg-white count-all rounded-[5px] text-black px-1 pt-[1.5px]">{{
+                                menus?.data?.length || 0 }}</span>
+                        </div>
                         <div class="bg-black categories rounded-[5px] flex p-1 items-center justify-center cursor-pointer"
                             @click="showCategoryModal()">
                             <p>Categories</p>
@@ -91,13 +62,17 @@ function showCategoryModal() {
                         </NuxtLink>
                     </div>
                 </div>
+                <p class="p-2 mt-3 text-black bg-red-100 border-red-500 rounded-lg border-[1px]">
+                    Note: Untuk pesanan bungkus wajib pesan dikasir.
+                </p>
             </div>
             <div class="px-5 mt-5 menu-result-container">
-                <div v-for="menuByCategory in menus">
-                    <MenuContainer :menus-in-category="menuByCategory" />
-                </div>
+                <div v-if="!menus?.data >= 1" class="flex items-center justify-center w-full h-full">
+                    Loading...</div>
+                <MenuContainer v-for="(menuByCategory, index) in menus?.data" :key="index"
+                    :menus-in-category="menuByCategory" />
             </div>
-            <CheckoutFooter />
+            <LazyCheckoutFooter class="mt-auto" />
         </div>
     </div>
 </template>

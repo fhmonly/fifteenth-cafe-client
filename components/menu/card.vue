@@ -1,13 +1,11 @@
 <script setup>
 import Swal from 'sweetalert2'
+import { createApp } from 'vue'
+import AddToCart from '@/components/modal/add-to-cart.vue';
 const { menuData } = defineProps({
     menuData: {
         required: true,
         type: Object,
-        validator(value) {
-            const { nama, price_menu, category, id } = value
-            return !!nama && !!price_menu && !!category && !!id
-        },
     }
 })
 const { nama, img = "/img/no-image.png", price_menu } = menuData
@@ -18,18 +16,18 @@ function showAddCartModal() {
     Swal.fire({
         showConfirmButton: false,
         didRender: () => {
-            const modal = document.createElement("modal-add-cart")
-            modal.dataMenu = menuData
+            const modal = document.createElement("div")
+            createApp(AddToCart, { menuData }).mount(modal)
             Swal.getHtmlContainer().appendChild(modal)
         }
     })
 }
 </script>
 <template>
-    <div class="card shadow-xl w-[142px] bg-white rounded-[10px] z-[0] min-h-[184px] h-full">
-        <figure>
-            <img :src="img" :alt="nama" class="aspect-[142/107]" />
-        </figure>
+    <div class="card shadow-xl w-auto bg-white rounded-[10px] z-[0] min-h-[184px] h-full">
+        <div class="aspect-[142/107] w-full">
+            <LazyNuxtImg :src="img" :alt="nama" class="w-full h-full" sizes="48vw" fit="cover" format="webp" />
+        </div>
         <div class="gap-1 p-2 card-body">
             <div class="flex">
                 <div class="grow">

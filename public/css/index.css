@@ -7,11 +7,12 @@
     font-style: normal;
 }
 
-*{
+* {
     caret-color: currentColor;
 }
 
-body,#root{
+body,
+#root {
     max-width: var(--max-screen-width);
 }
 
@@ -20,6 +21,7 @@ body {
     font-family: var(--font-family);
     font-size: var(--font-size-md);
     padding-right: 0px !important;
+    scrollbar-gutter: stable both-edges;
 }
 
 body>#root {
@@ -37,6 +39,7 @@ body #pls-rotate {
 }
 
 @media (orientation: landscape) {
+
     /* body, */
     body[device-type="mobile"] {
         --page-visibility: none;
@@ -61,7 +64,7 @@ header {
     font-weight: 900;
 }
 
-.fifteenth-logo + * {
+.fifteenth-logo+* {
     font-size: 8px;
     font-weight: 800;
     height: 100%;

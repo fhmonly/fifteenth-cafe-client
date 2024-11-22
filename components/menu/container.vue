@@ -5,11 +5,20 @@ const { menusInCategory } = defineProps({
         required: true,
         type: Object,
     }
-})
-const { category_name, menus } = menusInCategory
+});
+const { category_name, menus } = menusInCategory;
+const list = ref(menus?.slice(0, 10));
+const isCurrentCategory = computed(() => [category_name, 'show-all'].includes(menuMode.value))
+watch(menuMode, (newMenuMode) => {
+    if (newMenuMode === category_name) {
+        list.value = menus
+    } else if (newMenuMode === 'show-all') {
+        list.value = menus?.slice(0, 10)
+    }
+});
 </script>
 <template>
-    <div v-if="menus.length >= 1">
+    <div v-if="menus?.length >= 1 && isCurrentCategory">
         <div class="flex items-center justify-between menu-header">
             <div class="flex items-center justify-center gap-2 category-name">
                 <IconBiCupFill />
@@ -17,15 +26,12 @@ const { category_name, menus } = menusInCategory
                     {{ category_name }}
                 </span>
             </div>
-            <a href="javascript:void(0)" class="font-bold text-black see-all"
-                @click="menuMode = 'show-category-[' + category_name + ']'">See
-                all</a>
+            <a href="javascript:void(0)" class="font-bold text-black see-all" @click="menuMode = category_name">
+                See all
+            </a>
         </div>
-        <div class="flex flex-wrap justify-between pb-5 menu-content mt-9 gap-y-5"
-            @show-by-category="console.log($event.detail)">
-            <div v-for="menuData in menus">
-                <MenuCard :menu-data="menuData" :key="menuData.id" />
-            </div>
+        <div class="grid grid-cols-2 gap-5 pb-5 menu-content mt-9" @show-by-category="console.log($event.detail)">
+            <MenuCard v-for="item in list" :menu-data="item" :key="item.id" />
         </div>
     </div>
 </template>
