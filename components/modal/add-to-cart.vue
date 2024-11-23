@@ -11,16 +11,21 @@ function increment() {
 function decrement() {
     if (qty.value >= 2) qty.value -= 1
 }
-function insertItem() {
+function insertItem(target) {
+    const formdata = new FormData(target)
     insertItemToCart({
         ...menuData,
         menu_id: menuData.id,
-        qty: qty.value
+        qty: qty.value,
+        notes: formdata.get('notes')
     })
 }
 </script>
 <template>
-    <div class="text-left bg-white rounded-lg shadow-sm">
+    <form class="text-left bg-white rounded-lg shadow-sm" @submit="($event) => {
+        $event.preventDefault()
+        insertItem($event.target)
+    }">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold text-black">Detail Order</h2>
             <button id="closeButton" class="text-2xl text-gray-600" @click="Swal.close()">&times;</button>
@@ -49,18 +54,19 @@ function insertItem() {
         <div class="mt-4 ">
             <textarea
                 class="w-full p-2 bg-gray-100 border-gray-600 rounded resize-none focus:ring focus:ring-opacity-50"
-                rows="2" placeholder="Anything we should know?"></textarea>
+                rows="2" placeholder="Anything we should know?" name="notes"></textarea>
         </div>
 
         <div class="flex items-center justify-between mt-4">
             <button class="flex items-center gap-2 px-4 py-2 text-white rounded-lg bg-main confirm-button"
-                @click="insertItem()">
+                type="submit">
                 <IconBiCart4 width="20" height="20" />
                 <p class="font-bold">Add to Cart</p>
             </button>
-            <button class="flex items-center gap-2 px-4 py-2 rounded-lg text-bg-main " @click="Swal.close()">
+            <button class="flex items-center gap-2 px-4 py-2 rounded-lg text-bg-main " @click="Swal.close()"
+                type="button">
                 <p>Cancel</p>
             </button>
         </div>
-    </div>
+    </form>
 </template>

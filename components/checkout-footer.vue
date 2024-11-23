@@ -53,13 +53,17 @@ watch(addToCartStatus, (newAddToCartStatus) => {
 });
 
 function showModalCheckout() {
-    const [modal] = useCreateApp('div', CheckoutCartContainer);
+    const [modal, vueCheckoutCart] = useCreateApp('div', CheckoutCartContainer);
 
     Swal.fire({
         showConfirmButton: false,
         didRender() {
+            cartItemsStatus.value = 'to-be-refresh'
             Swal.getHtmlContainer().appendChild(modal)
-        }
+        },
+        didDestroy() {
+            vueCheckoutCart.unmount()
+        },
     })
 }
 </script>

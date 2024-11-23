@@ -36,7 +36,7 @@ export function useAuth$fetch<T = unknown, O = NitroFetchOptions<any, any>>(
     return $fetch<T>(url, {
         baseURL: config.public.apiURL,
         credentials: 'include',
-        onResponse: async ({ response }) => {
+        onResponseError: async ({ response }) => {
             if (response.status !== 200) {
                 const data = response._data || {};
                 const qrStatus = data['qr-status'];
