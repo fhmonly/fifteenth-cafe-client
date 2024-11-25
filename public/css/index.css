@@ -85,19 +85,20 @@ div:where(.swal2-container) .swal2-html-container {
     /* padding: 0 !important; */
 }
 
-.swal2-html-container input[type="number"] {
+input[type="number"] {
     -moz-appearance: textfield;
+    appearance: textfield;
 }
 
-.swal2-html-container input[type="number"] {
+input[type="number"] {
     appearance: none;
     outline: none;
     border: none;
     text-align: center;
 }
 
-input[type="number"].no-btn::-webkit-inner-spin-button,
-input[type="number"].no-btn::-webkit-outer-spin-button {
+input[type="number"].no-spin-btn::-webkit-inner-spin-button,
+input[type="number"].no-spin-btn::-webkit-outer-spin-button {
     display: none !important;
     -webkit-appearance: none !important;
     -moz-appearance: none !important;

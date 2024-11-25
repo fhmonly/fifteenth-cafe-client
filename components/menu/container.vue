@@ -8,14 +8,15 @@ const { menusInCategory } = defineProps({
 });
 const { category_name, menus } = menusInCategory;
 const list = ref(menus?.slice(0, 10));
-const isCurrentCategory = computed(() => [category_name, 'show-all'].includes(menuMode.value))
-watch(menuMode, (newMenuMode) => {
-    if (newMenuMode === category_name) {
+const isCurrentCategory = ref(false)
+watch(menuMode, () => {
+    isCurrentCategory.value = [category_name, 'show-all'].includes(menuMode.value)
+    if (menuMode.value === category_name) {
         list.value = menus
-    } else if (newMenuMode === 'show-all') {
+    } else if (menuMode.value === 'show-all') {
         list.value = menus?.slice(0, 10)
     }
-});
+}, { immediate: true });
 </script>
 <template>
     <div v-if="menus?.length >= 1 && isCurrentCategory">

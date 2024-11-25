@@ -1,6 +1,6 @@
 <script setup>
 import Swal from 'sweetalert2'
-const { insertItemToCart } = useCart()
+const { addMenuToCart } = useCart()
 const { menuData } = defineProps({
     menuData: { type: Object }
 });
@@ -13,7 +13,7 @@ function decrement() {
 }
 function insertItem(target) {
     const formdata = new FormData(target)
-    insertItemToCart({
+    addMenuToCart({
         ...menuData,
         menu_id: menuData.id,
         qty: qty.value,

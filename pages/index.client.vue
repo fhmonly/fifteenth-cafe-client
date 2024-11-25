@@ -1,6 +1,5 @@
 <script setup>
 import ModalCategory from "@/components/modal/category.vue";
-import { createApp } from 'vue';
 import Swal from "sweetalert2";
 
 const menuMode = useMenuMode()
@@ -10,11 +9,10 @@ const { data: menus, status: menusLoadingStatus, error, refresh } = useAuthFetch
 });
 
 function showCategoryModal() {
+    const [modal] = useCreateApp('div', ModalCategory)
     Swal.fire({
         showConfirmButton: false,
         didRender: () => {
-            const modal = document.createElement('div');
-            createApp(ModalCategory).mount(modal);
             Swal.getHtmlContainer().appendChild(modal);
         },
     });
@@ -72,7 +70,7 @@ function showCategoryModal() {
                 <MenuContainer v-for="(menuByCategory, index) in menus?.data" :key="index"
                     :menus-in-category="menuByCategory" />
             </div>
-            <LazyCheckoutFooter class="mt-auto" />
+            <CheckoutFooter class="mt-auto" />
         </div>
     </div>
 </template>

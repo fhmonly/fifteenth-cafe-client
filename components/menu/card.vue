@@ -26,7 +26,7 @@ function showAddCartModal() {
 <template>
     <div class="card shadow-xl w-auto bg-white rounded-[10px] z-[0] min-h-[184px] h-full">
         <div class="aspect-[142/107] w-full">
-            <LazyNuxtImg :src="img" :alt="nama" class="w-full h-full" sizes="48vw" fit="cover" format="webp" />
+            <LazyNuxtImg :src="img" :alt="nama" class="w-full h-full" sizes="200px" fit="cover" format="webp" />
         </div>
         <div class="gap-1 p-2 card-body">
             <div class="flex">

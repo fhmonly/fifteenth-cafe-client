@@ -22,11 +22,11 @@ export function useClientHelper() {
 
 export function useCreateApp<T extends Component, Props extends Record<string, any>>
     (
-        containerName: string = 'div',
+        containerTagName: string = 'div',
         vueComponent: T,
         vueProp?: Props
     ): [HTMLElement, ReturnType<typeof createApp>] {
-    const container = document.createElement(containerName);
+    const container = document.createElement(containerTagName);
     const vueApp = createApp(vueComponent, vueProp);
     vueApp.mount(container);
     return [container, vueApp];
