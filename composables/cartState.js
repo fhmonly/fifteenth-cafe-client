@@ -7,26 +7,8 @@ let isUseCartInitialized = false
 export function useCart() {
     const cartItems = useState("cart-items-state", () => [])
     const cartItemsStatus = useState("cart-items-status", () => "idle");
-    async function fetchCartItems() {
-        try {
-            cartItemsStatus.value = 'pending'
-            await useAuth$fetch("/api/show-cart", {
-                onResponse({ response }) {
-                    if (response.ok) {
-                        cartItemsStatus.value = 'success'
-                        cartItems.value = response._data.cartItems
-                    } else {
-                        cartItemsStatus.value = 'error'
-                    }
-                }
-            })
-        } catch (error) {
-            cartItemsStatus.value = 'error'
-        }
-    }
     const cartDetails = useState("cart-details-state", () => {
         return {
-            "promo": null,
             "subTotal": 0,
             "tax": 0,
             "fee": 0,
@@ -36,16 +18,35 @@ export function useCart() {
         }
     });
     const cartDetailsStatus = useState("cart-details-status", () => "idle");
-    async function fetchCartDetails() {
+    const availablePromo = useState("available-promo-state", () => []);
+    const availablePromoStatus = useState("available-promo-status", () => "idle");
+    const currentPromo = useState('current-promo')
+    async function fetchCartItems() {
         try {
-            cartDetailsStatus.value = 'pending'
+            cartItemsStatus.value = 'pending'
             await useAuth$fetch("/api/show-cart", {
                 onResponse({ response }) {
                     if (response.ok) {
+                        cartItemsStatus.value = 'success'
+                        cartItems.value = response._data
+                    } else {
+                        cartItemsStatus.value = 'error'
+                    }
+                }
+            })
+        } catch (error) {
+            cartItemsStatus.value = 'error'
+        }
+    }
+    async function fetchCartDetails() {
+        try {
+            cartDetailsStatus.value = 'pending'
+            await useAuth$fetch("/api/show-cart-invoice", {
+                method: 'POST',
+                onResponse({ response }) {
+                    if (response.ok) {
                         cartDetailsStatus.value = 'success'
-                        Object.entries(cartDetails.value).forEach(cartDetailsArr => {
-                            cartDetails.value[cartDetailsArr[0]] = response._data[cartDetailsArr[0]]
-                        });
+                        cartDetails.value = response._data
                     } else {
                         cartDetailsStatus.value = 'error'
                     }
@@ -55,10 +56,28 @@ export function useCart() {
             cartDetailsStatus.value = 'error'
         }
     }
+    async function fetchAvailablePromo() {
+        try {
+            availablePromoStatus.value = 'pending'
+            await useAuth$fetch("/api/show-available-promo", {
+                onResponse({ response }) {
+                    if (response.ok) {
+                        availablePromoStatus.value = 'success'
+                        availablePromo.value = response._data
+                    } else {
+                        availablePromoStatus.value = 'error'
+                    }
+                }
+            })
+        } catch (error) {
+            availablePromoStatus.value = 'error'
+        }
+    }
 
     if (!isUseCartInitialized) {
         fetchCartDetails()
         fetchCartItems()
+        fetchAvailablePromo()
         isUseCartInitialized = true
     }
 
@@ -111,6 +130,7 @@ export function useCart() {
     return {
         cartItems, cartItemsStatus, fetchCartItems,
         cartDetails, cartDetailsStatus, fetchCartDetails,
+        availablePromo, availablePromoStatus, fetchAvailablePromo, currentPromo,
         addMenuToCart, showModalCheckout, removeItemFromCart
     }
 }
