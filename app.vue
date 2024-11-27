@@ -16,9 +16,13 @@ useHead({
     }
   ],
   link: [
-    { href: "/css/index.css", rel: "stylesheet" }
+    { href: "/css/font-poppins.css", rel: "stylesheet", fetchpriority: 'high' },
+    { href: "/css/root.css", rel: "stylesheet", fetchpriority: 'high' },
+    { href: "/css/main.css", rel: "stylesheet", fetchpriority: 'high' },
   ],
 });
+
+const { data } = useUserData()
 
 onMounted(() => {
   window.Swal = Swal;
@@ -32,9 +36,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="root" class="flex flex-col min-h-screen">
+  <div id="root" class="flex">
     <NuxtPwaManifest />
+    <Html class="overflow-hidden bg-dark" />
+
+    <Body
+      class="mx-auto max-w-screen-tablet [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-dark [&::-webkit-scrollbar-thumb]:bg-main max-h-screen overflow-y-auto [padding-right:0rem_!important] [scrollbar-gutter:stable]" />
     <NuxtLoadingIndicator color="red" :throttle="0" />
-    <LazyNuxtPage />
+    <LazyNuxtPage class="min-h-screen" />
   </div>
 </template>

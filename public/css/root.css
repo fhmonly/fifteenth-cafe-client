@@ -1,14 +1,10 @@
 :root {
-    /* --max-screen-width: 100%; */
     --max-screen-width: 375px;
-    --page-visibility: block;
-    --rotate-page-visibility: none;
 
     --bg-body: white;
     --bg-main: #a91d3a;
-    
+
     --text-main: black;
-    --grey-color: #eeeeee;
 
     --font-family: "Poppins", sans-serif;
 

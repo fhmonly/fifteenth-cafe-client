@@ -47,7 +47,7 @@
 import Swal from 'sweetalert2';
 import SwalDeleteConfirmation from '../modal/swal-delete-confirmation.vue';
 
-const { cartItems, removeItemFromCart, fetchCartDetails } = useCart()
+const { cartItems, removeItemFromCart } = useCart()
 const { toLocaleCurrency } = useUtils()
 const router = useRouter();
 const { item, itemIndex } = defineProps({
@@ -58,6 +58,8 @@ const { item, itemIndex } = defineProps({
         type: Number
     }
 });
+
+const emits = defineEmits(['fetch-detail'])
 
 watch(() => item, () => {
     qty.value = item.qty;
@@ -94,7 +96,7 @@ function showConfirmDeleteModal() {
                 method: 'DELETE',
                 body: item,
                 onResponse() {
-                    fetchCartDetails()
+                    emits('fetch-detail')
                     if (!cartItems.value.length >= 1) {
                         router.push('/')
                     }
@@ -114,7 +116,7 @@ function updateCartQty() {
             },
             onResponse() {
                 cartItems.value[itemIndex].qty = qty.value
-                fetchCartDetails()
+                emits('fetch-detail')
                 firstQty = qty.value
             }
         })
@@ -123,7 +125,7 @@ function updateCartQty() {
 
 let isNotesUpdating = false;
 function updateCartNotes() {
-    if (firstNotes !== notes.value?.trim() && isNotesUpdating === false) {
+    if (firstNotes !== notes.value?.trim() && isNotesUpdating === false && notes.value.trim().length > 0) {
         isNotesUpdating = true
         useAuth$fetch('/api/update-notes', {
             method: 'PUT',

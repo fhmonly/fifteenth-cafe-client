@@ -3,7 +3,14 @@ export default {
     extend: {
       colors: {
         main: "#a91d3a",
-        grey: "#eeeeee"
+        grey: "#eeeeee",
+        dark: "#1f1f1f",
+        MidnightBlue: "#282D34",
+        charcoal: "#00101D",
+        BlackStone: "#1C1D24",
+        TwilightNoir: "#242424",
+        SlateGrey: "#333333",
+        ShadowSlate: "#1A1A1A",
       }
     },
     screens: {
@@ -16,9 +23,6 @@ export default {
       '2xl': '1440px',
     }
   },
-  plugins: [
-    require('daisyui'),
-  ],
   content: [
     './components/**/*.{vue,js,ts}',
     './layouts/**/*.vue',

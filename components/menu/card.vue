@@ -24,14 +24,14 @@ function showAddCartModal() {
 }
 </script>
 <template>
-    <div class="card shadow-xl w-auto bg-white rounded-[10px] z-[0] min-h-[184px] h-full">
+    <div class="card shadow-xl w-auto bg-white rounded-[10px] z-[0] min-h-[184px] h-full flex flex-col">
         <div class="aspect-[142/107] w-full">
             <LazyNuxtImg :src="img" :alt="nama" class="w-full h-full" sizes="200px" fit="cover" format="webp" />
         </div>
-        <div class="gap-1 p-2 card-body">
-            <div class="flex">
+        <div class="flex flex-col h-full gap-1 p-2">
+            <div class="flex grow">
                 <div class="grow">
-                    <h2 class="card-title">{{ nama }}</h2>
+                    <h2 class="card-title line-clamp-2">{{ nama }}</h2>
                     <p class="menu-price">{{ makeIDR(price_menu) }}</p>
                 </div>
                 <div class="menu-rating text-[7px] text-black flex">
@@ -46,7 +46,7 @@ function showAddCartModal() {
                     </div>
                 </div>
             </div>
-            <div class="justify-end mt-auto card-actions">
+            <div class="justify-end mt-auto card-actions ms-auto">
                 <button
                     class="flex items-center h-auto min-h-0 px-3 py-1 text-white bg-black rounded-md gap-x-2 hover:bg-opacity-85"
                     @click="showAddCartModal()">

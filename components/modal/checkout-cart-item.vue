@@ -114,7 +114,7 @@ function updateCartQty() {
 
 let isNotesUpdating = false;
 function updateCartNotes() {
-    if (firstNotes !== notes.value?.trim() && isNotesUpdating === false) {
+    if (firstNotes !== notes.value?.trim() && isNotesUpdating === false && notes.value.trim().length > 0) {
         isNotesUpdating = true
         useAuth$fetch('/api/update-notes', {
             method: 'PUT',

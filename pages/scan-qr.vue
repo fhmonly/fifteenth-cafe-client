@@ -16,7 +16,7 @@ watch(() => route.query, () => {
         },
         credentials: 'include',
         onResponse: ({ response }) => {
-            if (response.ok) router.push('/')
+            if (response.ok) window.location.href = '/'
         },
         onResponseError: ({ response }) => {
             console.error(response._data)

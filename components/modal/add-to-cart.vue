@@ -63,8 +63,7 @@ function insertItem(target) {
                 <IconBiCart4 width="20" height="20" />
                 <p class="font-bold">Add to Cart</p>
             </button>
-            <button class="flex items-center gap-2 px-4 py-2 rounded-lg text-bg-main " @click="Swal.close()"
-                type="button">
+            <button class="flex items-center gap-2 px-4 py-2 rounded-lg text-main " @click="Swal.close()" type="button">
                 <p>Cancel</p>
             </button>
         </div>
