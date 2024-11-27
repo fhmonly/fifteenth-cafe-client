@@ -118,8 +118,9 @@ function makeTransaction(form) {
                     }
                 },
                 onResponse({ response }) {
-                    if (response['code_transaction']) {
-                        router.push(`/invoice/${response['code_transaction']}`)
+                    const codeTransaction = response._data['code_transaction']
+                    if (codeTransaction) {
+                        window.location.href = (`/invoice/${codeTransaction}`)
                     }
                 }
             })
@@ -135,10 +136,10 @@ onMounted(() => {
 
 </script>
 <template>
-    <div class="flex flex-col min-h-screen">
+    <div class="flex flex-col min-h-screen bg-gray-200">
         <AppHeader>
             <template #left_content>
-                <NuxtLink to="/" class="text-white">
+                <NuxtLink to="/">
                     <IconBiArrowLeftSquareFill />
                 </NuxtLink>
             </template>
@@ -147,8 +148,8 @@ onMounted(() => {
             $event.preventDefault()
             makeTransaction($event.target)
         }">
-            <div class="p-3 order-container grow">
-                <div class="mb-3 bg-white rounded-md">
+            <div class="flex flex-col items-stretch gap-3 p-3 order-container grow">
+                <div class="bg-white rounded-md">
                     <div class="p-3 px-4 font-bold text-white bg-main rounded-t-md">
                         <p>Customer Data</p>
                     </div>
@@ -165,7 +166,7 @@ onMounted(() => {
                         <div class="pt-3 mb-2 wrapper">
                             <input type="text" id="fth_customer-phone"
                                 class="w-full border-dark border-[1px] rounded-md h-10 placeholder:opacity-0"
-                                placeholder="Masukkan nomer hp" name="wa_number" :value="waNumber"
+                                placeholder="Masukkan nomer hp" name="wa_number" :value="userData?.data?.wa_number"
                                 pattern="^(08|628)\d{9,11}$" required>
                             <label for="fth_customer-phone">
                                 Phone Number :
@@ -174,7 +175,8 @@ onMounted(() => {
                         <p class="text-xs font-light text-gray-500 ms-2">Contoh: 6281##### atau 081#####</p>
                     </div>
                 </div>
-                <div class="mb-3 text-white bg-white rounded-md">
+
+                <div class="text-white bg-white rounded-md">
                     <div class="flex items-center justify-between px-4 py-3 bg-black order-header rounded-t-md">
                         <p class="text-[14px] font-bold ">Order Type</p>
                         <p
@@ -196,7 +198,7 @@ onMounted(() => {
                     </div>
                 </div>
 
-                <div class="mb-3 bg-white rounded-md">
+                <div class="bg-white rounded-md">
                     <div class="p-3 px-4 font-bold text-white bg-main rounded-t-md">
                         <p>Detail Payment</p>
                     </div>
@@ -214,7 +216,7 @@ onMounted(() => {
                     </button>
                 </div>
 
-                <div class="mb-3">
+                <div>
                     <div class="p-3 px-4 font-bold text-white bg-main rounded-t-md">
                         <p>Detail Payment</p>
                     </div>
@@ -248,19 +250,22 @@ onMounted(() => {
                         </table>
                     </div>
                 </div>
-                <div class="flex items-center justify-between px-4 py-3 mb-3 rounded-md use-point-wrapper bg-main">
-                    <p class="inline-block font-bold text-white text-[13px]">Use {{ userData?.data?.points }} point</p>
+
+                <div class="flex items-center justify-between px-4 py-3 rounded-md use-point-wrapper bg-main">
+                    <p class="inline-block font-bold text-white text-[13px]">Use {{ userData?.data?.points || 0 }} point
+                    </p>
                     <input type="checkbox" class="scale-[.8] toggle take-away switch" name="use_points"
                         :disabled="(+userData?.data?.points || 0) < 1 || cartDetailsStatus === 'pending'" @change="($event) => {
                             isUsingPoint = $event.target.checked
                             fetchCartDetails()
                         }">
                 </div>
-                <div class="mt-5">
+
+                <div class="overflow-hidden rounded-md">
                     <div class="p-3 px-4 font-bold text-white bg-main rounded-t-md">
                         <p>Payment Method</p>
                     </div>
-                    <div class="flex flex-col p-2 bg-white rounded-md gap-y-2">
+                    <div class="flex flex-col p-4 bg-white gap-y-2">
                         <label type="button"
                             class="border-[1.2px] font-medium p-2 rounded-md discount-container text-main flex w-full justify-between items-center cursor-pointer"
                             v-for="(method) in availablePaymentMethod" :key="method.id"

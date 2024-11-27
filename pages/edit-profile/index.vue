@@ -1,14 +1,13 @@
 <script setup>
 useSeoMeta({
     titleTemplate: "",
-    title: "Edit Profile",
-})
+    title: "Customer Profile",
+});
 </script>
 
 <template>
-    <div id="page" class="flex flex-col justify-between bg-white shadow-sm h-screen w-[360px]">
-        <div class=" flex items-center   px-3 pt-4 pb-2  h-[56px]">
-            <div class="item ms-3"></div>
+    <div id="page" class="px-4 mb-10 bg-white shadow-sm">
+        <div class=" flex items-center justify-between px-3 pt-4 pb-2  h-[56px] sticky top-0 bg-white">
             <p class="text-xl font-bold text-black">Profil</p>
             <NuxtLink to="/" class="text-black text-2xl font-bold ms-[238px]">
                 <IconBiX />

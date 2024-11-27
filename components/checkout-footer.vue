@@ -1,25 +1,26 @@
 <script setup>
 const { cartItems, showModalCheckout, cartDetails, cartItemsStatus } = useCart();
+const { toLocaleCurrency } = useUtils();
 </script>
 
 <template>
-    <div class="checkout-wrapper sticky bg-main bottom-2 rounded-[7px] flex p-2 items-center mx-2"
-        v-show="cartItems.length > 0">
-        <div class="flex items-center checkout-cart grow" @click=" showModalCheckout()">
-            <div class="relative flex items-center text-white checkout-icon">
-                <LazyIconBiCashCoin width="22" height="22" />
-                <small
-                    class="rounded-badge bg-black text-[6px] min-h-0 h-fit aspect-square px-1 flex items-center absolute top-[-4px] right-[-4px]">
-                    {{ cartItems?.length }}
-                </small>
-            </div>
-            <div class="checkout-price text-[10px] ms-4 font-bold text-white">
-                Total: <span>{{ cartDetails?.subTotal }}</span>
-            </div>
+    <div class="sticky bottom-0 w-full p-2">
+        <div class="flex items-center p-1 px-3 text-white rounded-md pe-2 bg-main" v-show="cartItems.length > 0">
+            <span class="flex items-center grow gap-x-2" @click=" showModalCheckout()">
+                <div class="relative inline-flex py-2 pr-2">
+                    <IconBiCashCoin width="24" height="24" />
+                    <div
+                        class="absolute top-0 right-0 flex items-center justify-center w-auto h-4 text-xs bg-black rounded-full aspect-square min-w-2 shrink-0">
+                        {{ cartItems?.length }}
+                    </div>
+                </div>
+                <span class="font-medium">
+                    Total : <span>{{ toLocaleCurrency(cartDetails?.subTotal) }}</span>
+                </span>
+            </span>
+            <NuxtLink to="/checkout" class="inline-block h-full p-2 px-4 font-bold text-black bg-white rounded-md">
+                Checkout
+            </NuxtLink>
         </div>
-        <NuxtLink to="/checkout"
-            class="checkout-btn font-bold rounded-md bg-white text-black border-none ms-auto text-[10px] p-2 min-h-0 h-fit px-4 hover:opacity-90">
-            Checkout
-        </NuxtLink>
     </div>
 </template>

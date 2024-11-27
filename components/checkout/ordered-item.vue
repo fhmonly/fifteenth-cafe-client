@@ -4,9 +4,10 @@
             <NuxtImg class="w-[68px] aspect-square rounded-md object-cover" :src="item.image || `/img/no-image.png`"
                 :alt="`gambar ${item.menu_name}`" @error="this.src = '/img/no-image.png'" format="webp" />
             <div class="flex-1 ml-4">
-                <div class="text-base font-bold text-black">
-                    {{ item.menu_name }} -
-                    <span class="text-sm font-thin text-gray-400">
+                <div class="flex items-center gap-2 text-base font-bold text-black">
+                    <span>{{ item.menu_name }}</span>
+                    <span>-</span>
+                    <span class="text-sm font-normal text-gray-400">
                         {{ toLocaleCurrency(item.price) }}
                     </span>
                 </div>

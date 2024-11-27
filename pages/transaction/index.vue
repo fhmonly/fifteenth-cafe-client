@@ -8,7 +8,7 @@ useSeoMeta({
     <div>
         <AppHeader>
             <template #left_content>
-                <NuxtLink to="/" class="text-white ps-2">
+                <NuxtLink to="/">
                     <IconBiArrowLeftSquareFill />
                 </NuxtLink>
             </template>

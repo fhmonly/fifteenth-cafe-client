@@ -28,7 +28,7 @@ onMounted(() => {
 });
 </script>
 <template>
-    <div class="flex flex-col items-center justify-center h-screen max-h-screen bg-white">
+    <div class="[align-items:center!important] justify-center bg-white">
         <LottiePlayer src="/json/animation-scan-qr.json" />
         <input type="file" id="scan-img" accept="image/*" capture="environment" hidden />
         <label class="flex items-center p-2 px-4 text-sm text-white rounded-md gap-x-2 bg-main" for="scan-img">

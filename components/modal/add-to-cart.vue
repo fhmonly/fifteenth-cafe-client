@@ -39,17 +39,19 @@ function insertItem(target) {
                     {{ (+menuData.price || 0).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) }}
                 </p>
                 <div class="flex mt-2 gap-x-1">
-                    <button id="decrement" class="px-2 text-white rounded bg-main" @click="decrement()">-</button>
+                    <button id="decrement" class="px-2 text-white rounded bg-main" @click="decrement()"
+                        type="button">-</button>
                     <input id="quantity" type="number" no-btn
                         class="w-10 text-center text-white bg-black border rounded text-md" :value="qty" min="1">
-                    <button id="increment" class="px-2 text-white rounded bg-main" @click="increment()">+</button>
+                    <button id="increment" class="px-2 text-white rounded bg-main" @click="increment()"
+                        type="button">+</button>
                 </div>
             </div>
         </div>
 
-        <div class="flex items-center justify-center w-full h-10 mt-4 bg-black rounded-md">
-            <p class="font-semibold text-white text-md me-2">Untuk pesanan bungkus wajib pesan dikasir</p>
-        </div>
+        <p class="p-2 text-black bg-red-100 border-red-500 rounded-lg border-[1px] text-xs my-2">
+            Note: Untuk pesanan bungkus wajib pesan dikasir.
+        </p>
 
         <div class="mt-4 ">
             <textarea
@@ -61,7 +63,7 @@ function insertItem(target) {
             <button class="flex items-center gap-2 px-4 py-2 text-white rounded-lg bg-main confirm-button"
                 type="submit">
                 <IconBiCart4 width="20" height="20" />
-                <p class="font-bold">Add to Cart</p>
+                <p class="text-xs">Add to Cart</p>
             </button>
             <button class="flex items-center gap-2 px-4 py-2 rounded-lg text-main " @click="Swal.close()" type="button">
                 <p>Cancel</p>

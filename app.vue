@@ -36,13 +36,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <div id="root" class="flex">
+  <div id="root">
     <NuxtPwaManifest />
     <Html class="overflow-hidden bg-dark" />
 
     <Body
-      class="mx-auto max-w-screen-tablet [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-dark [&::-webkit-scrollbar-thumb]:bg-main max-h-screen overflow-y-auto [padding-right:0rem_!important] [scrollbar-gutter:stable]" />
+      class="mx-auto max-w-screen-tablet [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-dark [&::-webkit-scrollbar-thumb]:bg-main max-h-screen overflow-y-auto [padding-right:0rem_!important] [scrollbar-gutter:stable] text-xs" />
     <NuxtLoadingIndicator color="red" :throttle="0" />
-    <LazyNuxtPage class="min-h-screen" />
+    <LazyNuxtPage class="flex flex-col items-stretch w-full min-h-screen" />
   </div>
 </template>
