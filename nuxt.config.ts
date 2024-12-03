@@ -12,7 +12,8 @@ export default defineNuxtConfig({
     '@nuxt/icon',
     '@vite-pwa/nuxt',
     '@nuxt/image',
-    '@vueuse/nuxt'
+    '@vueuse/nuxt',
+    'dayjs-nuxt'
   ],
   runtimeConfig: {
     public: {
@@ -34,10 +35,10 @@ export default defineNuxtConfig({
   },
   pwa: {
     manifest: {
-      name: 'My PWA',
-      short_name: 'PWA',
-      theme_color: '#ffffff',
-      description: "tes",
+      name: 'Fifteenth Cafe',
+      short_name: 'Fth Cafe',
+      theme_color: '#a91d3a',
+      description: "Fifteenth Cafe",
       lang: 'id',
       display: "fullscreen",
       icons: [

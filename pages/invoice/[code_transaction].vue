@@ -3,6 +3,53 @@ const route = useRoute();
 useSeoMeta({
     title: `Invoice ${route.params.code_transaction}`,
 });
+const { toLocaleCurrency } = useUtils()
+const invoice = ref(null);
+const invoiceStatus = ref('pending');
+async function fetchInvoice() {
+    invoiceStatus.value = 'pending'
+    try {
+        await useAuth$fetch(`/api/invoice/${route.params.code_transaction}`, {
+            onResponse({ response }) {
+                if (response.ok) {
+                    invoiceStatus.value = 'success'
+                    invoice.value = response._data.data
+                } else {
+                    invoiceStatus.value = 'error'
+                }
+            }
+        })
+    } catch (error) {
+        invoiceStatus.value = 'error'
+    }
+}
+
+onMounted(() => {
+    fetchInvoice()
+    async function DOMShot() {
+        const html2canvas = (await import('html2canvas')).default;
+        const { saveAs } = await import('file-saver');
+
+        const invoiceElem = () => document.querySelector('#invoice-paper');
+        const downloadBtn = document.querySelector("#download-invoice");
+        window.invoiceElem = invoiceElem()
+
+        downloadBtn.addEventListener('click', () => {
+            if (invoiceStatus.value === 'success') {
+                html2canvas(invoiceElem(), { scale: 2 })
+                    .then((canvas) => {
+                        canvas.toBlob((blob) => {
+                            saveAs(blob, `INVOICE-${invoice.value.code_transaction}.png`);
+                        });
+                    })
+                    .catch((error) => {
+                        console.error('Error saat menangkap elemen:', error);
+                    });
+            }
+        });
+    }
+    DOMShot()
+});
 </script>
 
 <template>
@@ -14,107 +61,123 @@ useSeoMeta({
                 </NuxtLink>
             </template>
         </AppHeader>
-        <div class="px-4 mb-2 text-black invoice-struct">
-            <div class="my-10 fifteenth-logo">
-                <h2 class="flex justify-center font-bold text-center">
-                    <span href="javascript:void(0)" class="text-3xl">Fifteen</span>
-                    <sup class="text-xs font-semibold">TH</sup>
-                </h2>
-            </div>
-            <div class="cafe-detail text-center text-[12px] font-extrabold">
-                <p class="my-3">Fifteen Cafe by Mark Design</p>
-                <p class="mx-auto font-normal">Jl. Lombok No.15, Ngagel, Kec. Wonokromo, Surabaya, Jawa Timur 60246</p>
-                <div class="divide h-[1px] w-full bg-[#D9D9D9] mt-7"></div>
-            </div>
-            <table class="text-[10px] mt-4 invoice-1 w-full">
-                <tbody>
-                    <tr class="font-bold">
-                        <td>Pelanggan</td>
-                        <td>Tanggal Order</td>
-                    </tr>
-                    <tr>
-                        <td><span>Mulyono</span></td>
-                        <td><span>23 September 2024 - 22:30 AM</span></td>
-                    </tr>
-                    <tr class="font-bold">
-                        <td>Tipe Order</td>
-                        <td>Meja</td>
-                    </tr>
-                    <tr>
-                        <td><span>Dine in</span></td>
-                        <td><span>12</span></td>
-                    </tr>
-                    <tr class="font-bold">
-                        <td>Tipe Transaksi</td>
-                        <td>Kode Transaksi</td>
-                    </tr>
-                    <tr>
-                        <td><span>QRIS</span></td>
-                        <td><span>SAFASHSJS61SB</span></td>
-                    </tr>
-                    <tr class="font-bold">
-                        <td>Waktu Transaksi</td>
-                        <td>Status Order</td>
-                    </tr>
-                    <tr>
-                        <td><span>23 September 2024 - 22:30 AM</span></td>
-                        <td><span>Sukses</span></td>
-                    </tr>
-                    <tr class="text-center">
-                        <td colspan="2">Silahkan perluhatkan nota ini ke kasir untuk konfirmasi transaksi pembayaran
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="dt-wrapper text-[10px]">
-                <h3 class="mt-3 font-bold">Detail Transaksi</h3>
-                <table class="w-full invoice-2">
+        <div id="invoice-paper" class="px-4 pb-10 mb-2 text-black bg-white invoice-struct grow"
+            v-if="invoiceStatus === 'success'">
+            <div>
+                <div class="mt-10 mb-5 fifteenth-logo">
+                    <h2 class="flex justify-center font-bold text-center">
+                        <span href="javascript:void(0)" class="text-3xl">Fifteen</span>
+                        <sup class="text-xs font-semibold">TH</sup>
+                    </h2>
+                </div>
+                <div class="cafe-detail text-center text-[12px] font-extrabold">
+                    <p class="my-3">Fifteen Cafe by Mark Design</p>
+                    <p class="mx-auto font-normal">Jl. Lombok No.15, Ngagel, Kec. Wonokromo, Surabaya, Jawa Timur 60246
+                    </p>
+                    <div class="divide h-[1px] w-full bg-[#D9D9D9] mt-7"></div>
+                </div>
+                <table class="text-[10px] mt-4 invoice-1 w-full">
                     <tbody>
                         <tr class="font-bold">
-                            <td class="">X2</td>
-                            <td>Kopi Luwak</td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
+                            <td>Pelanggan</td>
+                            <td>Tanggal Order</td>
+                        </tr>
+                        <tr>
+                            <td><span>{{ invoice.name_customer }}</span></td>
+                            <td><span>{{ $dayjs(invoice.created_at).format('DD MMM YYYY | hh:mm') }}</span></td>
                         </tr>
                         <tr class="font-bold">
-                            <td>X2</td>
-                            <td>Vietnam Drip</td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
+                            <td>Tipe Order</td>
+                            <td>Meja</td>
                         </tr>
-                        <tr class="font-bold total-price">
-                            <td colspan="2" class="text-end">
-                                <span class="inline-block px-2">Total</span>
-                            </td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
-                        </tr>
-                        <tr class="">
-                            <td colspan="2" class="text-end">
-                                <span class="inline-block px-2">Sub Total</span>
-                            </td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
-                        </tr>
-                        <tr class="">
-                            <td colspan="2" class="text-end">
-                                <span class="inline-block px-2">Tax</span>
-                            </td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
-                        </tr>
-                        <tr class="">
-                            <td colspan="2" class="text-end">
-                                <span class="inline-block px-2">Rounding</span>
-                            </td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
+                        <tr>
+                            <td><span class="capitalize">{{ invoice.order_type_food }}</span></td>
+                            <td><span>{{ invoice.no_table }}</span></td>
                         </tr>
                         <tr class="font-bold">
-                            <td colspan="2" class="text-end">
-                                <span class="inline-block px-2">Total Keseluruhan</span>
+                            <td>Tipe Transaksi</td>
+                            <td>Kode Transaksi</td>
+                        </tr>
+                        <tr>
+                            <td><span>{{ invoice.payment_method }}</span></td>
+                            <td><span>{{ invoice.code_transaction }}</span></td>
+                        </tr>
+                        <tr class="font-bold">
+                            <td>Waktu Bayar</td>
+                            <td>Status Pembayaran</td>
+                        </tr>
+                        <tr>
+                            <td><span>{{ $dayjs(invoice.payment_date).format('DD MMM YYYY | hh:mm') }}</span></td>
+                            <td><span>{{ invoice.payment_status }}</span></td>
+                        </tr>
+                        <tr class="text-center">
+                            <td colspan="2">Silahkan perluhatkan nota ini ke kasir untuk konfirmasi transaksi pembayaran
                             </td>
-                            <td class="font-normal text-end"><span>Rp. 300.000</span></td>
                         </tr>
                     </tbody>
                 </table>
+                <div class="dt-wrapper text-[10px]">
+                    <h3 class="mt-3 font-bold">Detail Transaksi</h3>
+                    <table class="w-full invoice-2">
+                        <tbody>
+                            <tr class="font-bold" v-for="(cart, index) in invoice.shop_carts" :key="index">
+                                <td class="">X{{ cart.qty }}</td>
+                                <td>{{ cart.menu_name }}</td>
+                                <td class="font-normal text-end"><span>{{ toLocaleCurrency(cart.total_price) }}</span>
+                                </td>
+                            </tr>
+                            <tr class="font-bold total-price">
+                                <td colspan="2" class="text-end">
+                                    <span class="inline-block px-2">Sub Total</span>
+                                </td>
+                                <td class="font-normal text-end"><span>{{ toLocaleCurrency(invoice.sub_total) }}</span>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td colspan="2" class="text-end">
+                                    <span class="inline-block px-2">Tax</span>
+                                </td>
+                                <td class="font-normal text-end"><span>{{ toLocaleCurrency(invoice.tax) }}</span></td>
+                            </tr>
+                            <tr class="">
+                                <td colspan="2" class="text-end">
+                                    <span class="inline-block px-2">Used points</span>
+                                </td>
+                                <td class="font-normal text-end">
+                                    <span>
+                                        {{ invoice.points_used || 0 }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="">
+                                <td colspan="2" class="text-end">
+                                    <span class="inline-block px-2">Discount</span>
+                                </td>
+                                <td class="font-normal text-end">
+                                    <span>
+                                        {{ toLocaleCurrency(invoice.discount_amount) }}
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr class="font-bold">
+                                <td colspan="2" class="text-end">
+                                    <span class="inline-block px-2">Total</span>
+                                </td>
+                                <td class="font-normal text-end"><span>{{ toLocaleCurrency(invoice.total_amount)
+                                        }}</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
+        <div v-else class="flex items-center justify-center px-4 mb-2 text-black invoice-struct grow">
+            <p class="text-center">Loading...</p>
+        </div>
+        <div class="px-4 mb-4">
             <button type="button"
-                class="sticky w-full p-4 mt-4 text-white border-none rounded-md btn bg-main bottom-2">Download</button>
+                class="sticky w-full p-4 mt-auto text-white border-none rounded-md btn bg-main bottom-2"
+                id="download-invoice">Download</button>
         </div>
     </div>
 </template>
