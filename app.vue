@@ -19,6 +19,7 @@ useHead({
     { href: "/css/font-poppins.css", rel: "stylesheet", fetchpriority: 'high' },
     { href: "/css/root.css", rel: "stylesheet", fetchpriority: 'high' },
     { href: "/css/main.css", rel: "stylesheet", fetchpriority: 'high' },
+    { rel: 'icon', href: '/icons/playstore.png' }
   ],
 });
 
@@ -32,6 +33,7 @@ onMounted(() => {
   } else {
     console.error('DeviceDetector is not available')
   }
+  console.log(useNuxtApp().$pwa.isPWAInstalled.value)
 });
 </script>
 
