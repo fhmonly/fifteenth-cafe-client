@@ -28,7 +28,7 @@ function insertItem(target) {
     }">
         <div class="flex items-center justify-between mb-4">
             <h2 class="text-xl font-semibold text-black">Detail Order</h2>
-            <button id="closeButton" class="text-2xl text-gray-600" @click="Swal.close()">&times;</button>
+            <button id="closeButton" class="text-2xl text-gray-600" @click="Swal.close()" type="button">&times;</button>
         </div>
         <div class="flex items-center">
             <NuxtImg :src="menuData.img || '/img/no-image.png'" onerror="this.src='/img/no-image.png'"
