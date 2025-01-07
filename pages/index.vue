@@ -45,7 +45,8 @@ function showCategoryModal() {
                 <div class="flex gap-x-2 justify-stretch search-header2">
                     <label
                         class="px-2 py-1 input-bordered flex items-center gap-2 bg-white border-black border-[1px] rounded-[5px] grow focus-within:outline-none focus-within:border-[#a91d3a] text-black">
-                        <input type="text" class="text-sm bg-transparent outline-none grow" placeholder="Search...." />
+                        <input type="text" class="text-sm bg-transparent outline-none grow w-full"
+                            placeholder="Search...." />
                         <a href="javascript:void(0)" @click="menuMode = 'show-by-keyword'">
                             <IconBiSearch />
                         </a>

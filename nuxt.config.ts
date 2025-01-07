@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-const FTH_ENDPOINT = "http://localhost:8000";
+const FTH_ENDPOINT = "http://192.168.1.3:8000";
 export default defineNuxtConfig({
-  devtools: { enabled: true },
+  devtools: { enabled: !true },
 
   vue: {
     compilerOptions: {
@@ -120,6 +120,11 @@ export default defineNuxtConfig({
             },
           },
         },
+      ],
+      globIgnores: [
+        '**/node_modules/**/*',
+        'sw.js',
+        'workbox-*.js',
       ],
     },
   },

@@ -21,14 +21,22 @@ useHead({
     { href: "/css/main.css", rel: "stylesheet", fetchpriority: 'high' },
     { rel: 'icon', href: '/icons/playstore.png' }
   ],
+  meta: [
+    {
+      name: 'viewport',
+      content: 'width=device-width, initial-scale=1.0, viewport-fit=cover'
+    }
+  ]
 });
 
 const { data } = useUserData()
+const deviceType = ref(null)
 
 onMounted(() => {
   window.Swal = Swal;
   if (typeof DeviceDetector !== 'undefined') {
     const { type } = DeviceDetector.parse(navigator.userAgent)
+    deviceType.value = type.toLowerCase()
     document.body.setAttribute('device-type', type.toLowerCase())
   } else {
     console.error('DeviceDetector is not available')
@@ -43,7 +51,10 @@ onMounted(() => {
     <Html class="overflow-hidden bg-dark" />
 
     <Body
-      class="mx-auto max-w-screen-tablet [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-dark [&::-webkit-scrollbar-thumb]:bg-main max-h-screen overflow-y-auto [padding-right:0rem_!important] [scrollbar-gutter:stable] text-xs" />
+      class="mx-auto max-w-screen-tablet [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-dark [&::-webkit-scrollbar-thumb]:bg-main max-h-screen overflow-y-auto [padding-right:0rem_!important] [scrollbar-gutter:stable] text-xs"
+      :class="{
+        'pb-14': deviceType === 'mobile'
+      }" />
     <NuxtLoadingIndicator color="red" :throttle="0" />
     <LazyNuxtPage class="flex flex-col items-stretch w-full min-h-screen bg-white" />
   </div>
